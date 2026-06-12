@@ -1,11 +1,559 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jason-Leo's World</title>
+<style>
+  :root {
+    --bg: #f0f2f5;
+    --card: #ffffff;
+    --primary: #3b7dd8;
+    --primary-light: #e8f1fb;
+    --text: #2c3e50;
+    --text-secondary: #5a6a7e;
+    --text-muted: #8895a7;
+    --border: #e4e8ef;
+    --shadow: 0 2px 12px rgba(0,0,0,.06);
+    --shadow-hover: 0 4px 20px rgba(0,0,0,.10);
+    --radius: 12px;
+    --radius-sm: 8px;
+    --gap: 20px;
+    --max-w: 880px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 28px 18px 40px;
+  }
+
+  /* ===== Header ===== */
+  .header {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 36px 32px;
+    text-align: center;
+    margin-bottom: var(--gap);
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #3b7dd8, #6db3f2);
+  }
+  .avatar {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3b7dd8, #5a9fe8);
+    color: #fff;
+    font-size: 32px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 14px rgba(59,125,216,.35);
+  }
+  .header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+  }
+  .header .subtitle {
+    font-size: 15px;
+    color: var(--text-secondary);
+    margin-bottom: 2px;
+  }
+  .header .subtitle span { color: var(--primary); font-weight: 600; }
+
+  /* ===== Section Card ===== */
+  .section {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 28px 32px;
+    margin-bottom: var(--gap);
+    transition: box-shadow .25s;
+  }
+  .section:hover {
+    box-shadow: var(--shadow-hover);
+  }
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 18px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: 1px;
+  }
+  .section-title::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 20px;
+    background: var(--primary);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  /* ===== Info Grid ===== */
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px 16px;
+  }
+  .info-item {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+  .info-item .label {
+    color: var(--text-muted);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .info-item .value {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  /* ===== Education ===== */
+  .edu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+  .edu-header .school {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .edu-header .date {
+    font-size: 13px;
+    color: var(--primary);
+    font-weight: 600;
+    background: var(--primary-light);
+    padding: 2px 12px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .edu-metrics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 24px;
+    margin-bottom: 12px;
+  }
+  .metric {
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+  .metric strong {
+    color: var(--primary);
+    font-size: 16px;
+  }
+  .courses {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.8;
+  }
+  .courses b { color: var(--text-secondary); font-weight: 600; }
+  .course-highlight {
+    display: inline-block;
+    background: #f6f9fc;
+    color: var(--primary);
+    font-weight: 600;
+    padding: 1px 7px;
+    border-radius: 4px;
+    margin: 0 2px;
+    font-size: 12px;
+  }
+  .lang-badges {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  .lang-badge {
+    font-size: 12px;
+    background: var(--primary-light);
+    color: var(--primary);
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-weight: 600;
+  }
+
+  /* ===== Research ===== */
+  .research-card {
+    background: #fafbfc;
+    border-left: 3px solid var(--primary);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 18px 20px;
+    margin-bottom: 0;
+  }
+  .research-card .paper-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 6px;
+    line-height: 1.5;
+  }
+  .research-card .paper-meta {
+    font-size: 13px;
+    color: var(--primary);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .research-card .paper-desc {
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: 10px;
+    text-align: justify;
+  }
+  .research-card .paper-work {
+    font-size: 13.5px;
+    color: var(--text);
+    line-height: 1.8;
+    text-align: justify;
+  }
+  .research-card .paper-work::before {
+    content: '▎本人工作：';
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  /* ===== Internship ===== */
+  .intern-card {
+    margin-bottom: 16px;
+  }
+  .intern-card:last-child { margin-bottom: 0; }
+  .intern-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+  .intern-header .company {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .intern-header .role {
+    font-size: 13px;
+    color: var(--primary);
+    font-weight: 600;
+  }
+  .intern-header .date {
+    font-size: 12px;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+  .intern-org {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  .tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+  .tech-tag {
+    font-size: 12px;
+    background: #f0f4f8;
+    color: #4a6a8a;
+    padding: 2px 10px;
+    border-radius: 4px;
+    font-family: "SF Mono", "Fira Code", "Consolas", monospace;
+    font-weight: 500;
+  }
+  .intern-work {
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    line-height: 1.85;
+    padding-left: 14px;
+    border-left: 2px solid var(--border);
+  }
+
+  /* ===== Honors ===== */
+  .honor-group {
+    margin-bottom: 12px;
+  }
+  .honor-group:last-child { margin-bottom: 0; }
+  .honor-group .group-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .honor-list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 8px;
+  }
+  .honor-list li {
+    font-size: 13px;
+    color: var(--text-secondary);
+    padding: 3px 10px;
+    background: #fafbfc;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+  }
+  .honor-list li.highlight {
+    background: var(--primary-light);
+    border-color: #c5d9f5;
+    color: #2c5aa0;
+    font-weight: 600;
+  }
+
+  /* ===== Skills ===== */
+  .skill-list {
+    list-style: none;
+  }
+  .skill-list li {
+    font-size: 14px;
+    color: var(--text-secondary);
+    padding: 7px 0;
+    border-bottom: 1px solid #f2f4f7;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    line-height: 1.7;
+  }
+  .skill-list li:last-child { border-bottom: none; }
+  .skill-list li::before {
+    content: '▹';
+    color: var(--primary);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ===== Footer ===== */
+  .footer {
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-muted);
+    padding: 12px 0 0;
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 768px) {
+    .container { padding: 16px 12px 28px; }
+    .header { padding: 28px 20px; }
+    .header h1 { font-size: 24px; }
+    .section { padding: 20px 18px; }
+    .info-grid { grid-template-columns: repeat(2, 1fr); }
+    .edu-header { flex-direction: column; }
+    .intern-header { flex-direction: column; }
+    .avatar { width: 64px; height: 64px; font-size: 26px; }
+  }
+  @media (max-width: 480px) {
+    .info-grid { grid-template-columns: 1fr 1fr; gap: 6px 10px; }
+    .info-item { font-size: 13px; }
+    .section-title { font-size: 16px; }
+    .header h1 { font-size: 22px; }
+    .tech-tags { gap: 4px; }
+    .tech-tag { font-size: 11px; padding: 2px 7px; }
+  }
+</style>
 </head>
 <body>
-    <h1>my name is ljj<h1>
+
+<div class="container">
+
+  <!-- ====== 头部 ====== -->
+  <header class="header">
+    <div class="avatar">李嘉杰</div>
+    <h1>李 嘉 杰</h1>
+    <p class="subtitle"><span>长沙理工大学</span> · 计算机与通信工程学院 · 软件工程</p>
+    <p class="subtitle" style="font-size:13px;color:var(--text-muted);margin-top:2px;">2023级本科生 · 2027届应届生</p>
+  </header>
+
+  <!-- ====== 基本信息 ====== -->
+  <section class="section">
+    <h2 class="section-title">基本信息</h2>
+    <div class="info-grid">
+      <div class="info-item"><span class="label">性别</span><span class="value">男</span></div>
+      <div class="info-item"><span class="label">年龄</span><span class="value">21 岁</span></div>
+      <div class="info-item"><span class="label">民族</span><span class="value">汉族</span></div>
+      <div class="info-item"><span class="label">政治面貌</span><span class="value">共产党员</span></div>
+      <div class="info-item"><span class="label">电话</span><span class="value">15200941479</span></div>
+      <div class="info-item"><span class="label">微信</span><span class="value">15200941479</span></div>
+      <div class="info-item"><span class="label">邮箱</span><span class="value">202308130108@csust.edu.cn</span></div>
+      <div class="info-item"><span class="label">籍贯</span><span class="value">湖南娄底</span></div>
+      <div class="info-item" style="grid-column: span 2;"><span class="label">现居地</span><span class="value">湖南长沙</span></div>
+    </div>
+  </section>
+
+  <!-- ====== 教育经历 ====== -->
+  <section class="section">
+    <h2 class="section-title">教育经历</h2>
+    <div class="edu-header">
+      <div class="school">长沙理工大学 · 计算机与通信工程学院 · 软件工程</div>
+      <div class="date">2023.09 – 2027.06</div>
+    </div>
+    <div class="edu-metrics">
+      <span class="metric">加权平均分 <strong>89.0</strong></span>
+      <span class="metric">GPA <strong>3.75</strong> / 4.0</span>
+      <span class="metric">专业排名 <strong>2</strong> / 163（<strong>前 1.2%</strong>）</span>
+    </div>
+    <div class="courses">
+      <b>主修课程：</b>
+      Python 程序设计 <span class="course-highlight">100</span>
+      &nbsp;线性代数 <span class="course-highlight">100</span>
+      &nbsp;大学物理 <span class="course-highlight">99</span>
+      &nbsp;离散结构 <span class="course-highlight">98</span>
+      &nbsp;移动开发技术 <span class="course-highlight">98</span>
+    </div>
+    <div class="lang-badges">
+      <span class="lang-badge">CET-4 510</span>
+      <span class="lang-badge">CET-6 509</span>
+    </div>
+  </section>
+
+  <!-- ====== 科研论文经历 ====== -->
+  <section class="section">
+    <h2 class="section-title">科研论文经历</h2>
+    <div class="research-card">
+      <div class="paper-title">
+        CrackDINO: A DINOv3-based Hybrid Framework for Fine-Grained Crack Segmentation
+      </div>
+      <div class="paper-meta">2026.03 – 至今 · 第一作者 · ICIC 2026 在投</div>
+      <div class="paper-desc">
+        针对路面细裂缝样本稀缺、对比度低、细小裂纹易漏检断裂的问题，提出 CrackDINO 混合分割框架：以自监督预训练大模型 DINOv3 作为特征编码器提取全局语义；自研 RGMFP 补充浅层细节、CAS 增强弱裂缝特征、CHMD 渐进解码重构轮廓，三重模块联合优化 U-Net 分割头，融合 Transformer 全局语义与 CNN 局部细节。在公开裂缝数据集上较基线模型 mIoU 提升明显，整体性能优于多款主流分割算法。
+      </div>
+      <div class="paper-work">
+        独立完成数据集标注预处理、模型 PyTorch 代码搭建；复现 DINOv2、SAM3、U-Net 等主流算法做横向对比，设计多组消融实验验证自研模块有效性，完成实验可视化、论文全文撰写及 ICIC 2026 投稿全流程。
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== 实习经历 ====== -->
+  <section class="section">
+    <h2 class="section-title">实习经历</h2>
+
+    <!-- 金蝶 -->
+    <div class="intern-card" style="margin-bottom:22px;">
+      <div class="intern-header">
+        <div>
+          <div class="company">金蝶软件（中国）有限公司</div>
+          <div class="role">管易研发部门 · 前端实习生</div>
+        </div>
+        <div class="date">2026.01 – 2026.03</div>
+      </div>
+      <div class="intern-org">公司规模 1000–9999 人</div>
+      <div class="tech-tags">
+        <span class="tech-tag">React</span>
+        <span class="tech-tag">TypeScript</span>
+        <span class="tech-tag">Ant Design</span>
+        <span class="tech-tag">Less</span>
+        <span class="tech-tag">Webpack</span>
+        <span class="tech-tag">Zustand</span>
+      </div>
+      <div class="intern-work">
+        参与千牛平台易工单 ERP 插件开发，依托 JSON Schema 搭建低代码表单渲染能力，封装通用 Hook 与全局状态管理方案，落地快捷录入、数据联动等业务功能，通过组件与状态优化精简重复代码、提升工单处理效率。
+      </div>
+    </div>
+
+    <!-- 聚恒 -->
+    <div class="intern-card">
+      <div class="intern-header">
+        <div>
+          <div class="company">湖南聚恒科技有限公司</div>
+          <div class="role">前端实习生</div>
+        </div>
+        <div class="date">2025.06 – 2025.09</div>
+      </div>
+      <div class="intern-org">公司规模 1000–9999 人</div>
+      <div class="tech-tags">
+        <span class="tech-tag">Vue</span>
+        <span class="tech-tag">JavaScript</span>
+        <span class="tech-tag">UniApp</span>
+        <span class="tech-tag">Pinia</span>
+        <span class="tech-tag">Vite</span>
+        <span class="tech-tag">ECharts</span>
+        <span class="tech-tag">Uview-plus</span>
+      </div>
+      <div class="intern-work">
+        参与广告主后台、辅警招考 UniApp 项目开发，基于 RBAC 搭建多角色权限管控体系，二次封装通用表单组件完成复杂广告配置业务；通过分包构建、代码压缩、虚拟列表等方案优化包体积与大数据列表渲染性能，运用设计模式封装 ECharts 可视化组件，实现多端业务高效落地。
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== 荣誉奖项 ====== -->
+  <section class="section">
+    <h2 class="section-title">荣誉奖项</h2>
+
+    <div class="honor-group">
+      <div class="group-label">🏆 竞赛获奖</div>
+      <ul class="honor-list">
+        <li class="highlight">CCF 开源创新大赛 · 国家级一等奖</li>
+        <li>蓝桥杯 · 省级二等奖</li>
+        <li>服务外包创新大赛 · 省级三等奖</li>
+      </ul>
+    </div>
+
+    <div class="honor-group">
+      <div class="group-label">🎖 奖学金及表彰</div>
+      <ul class="honor-list">
+        <li>一等奖学金</li>
+        <li>三好学生</li>
+        <li>优秀班干部</li>
+        <li>优秀团员</li>
+        <li>科技创新先进个人</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ====== 技能清单 ====== -->
+  <section class="section">
+    <h2 class="section-title">技能清单</h2>
+    <ul class="skill-list">
+      <li>熟悉 <b>Python</b>、<b>TypeScript</b>、<b>C/C++</b>，掌握面向对象与常用设计模式</li>
+      <li>熟悉 <b>PyTorch</b> 与 <b>OpenCV</b>，精通深度学习模型构建、训练及计算机视觉任务</li>
+      <li>熟练运用 <b>Claude Skills</b>、<b>Prompt Engineering</b> 及 <b>MCP</b> 等 AI 工具，辅助代码生成、调试与开发提效</li>
+      <li>熟悉 <b>Git</b>、<b>Linux</b>、<b>Docker</b> 基础使用，<b>LaTeX</b> 论文排版，<b>Visio</b>、<b>PPT</b> 架构绘图，英文六级可顺畅阅读顶会论文</li>
+    </ul>
+  </section>
+
+  <!-- ====== Footer ====== -->
+  <footer class="footer">
+    李嘉杰 · 长沙理工大学软件工程 · 202308130108@csust.edu.cn
+  </footer>
+
+</div>
+
 </body>
 </html>
