@@ -6,130 +6,164 @@
 <title>Jason-Leo's World</title>
 <style>
   :root {
-    --bg: #f0f2f5;
+    --bg: #ffffff;
     --card: #ffffff;
-    --primary: #3b7dd8;
-    --primary-light: #e8f1fb;
-    --text: #2c3e50;
-    --text-secondary: #5a6a7e;
-    --text-muted: #8895a7;
-    --border: #e4e8ef;
-    --shadow: 0 2px 12px rgba(0,0,0,.06);
-    --shadow-hover: 0 4px 20px rgba(0,0,0,.10);
-    --radius: 12px;
-    --radius-sm: 8px;
-    --gap: 20px;
-    --max-w: 880px;
+    --text: #171717;
+    --text-secondary: #525252;
+    --text-muted: #737373;
+    --text-dim: #a3a3a3;
+    --border: #e5e5e5;
+    --border-light: #f5f5f5;
+    --tag-bg: #f5f5f5;
+    --tag-text: #525252;
+    --highlight-bg: #fafafa;
+    --highlight-text: #171717;
+    --highlight-border: #d4d4d4;
+    --ring: #e5e5e5;
+    --radius: 8px;
+    --radius-sm: 6px;
+    --gap: 32px;
+    --max-w: 1080px;
+    --font-mono: "SF Mono", "Fira Code", "Consolas", "Courier New", monospace;
+  }
+
+  [data-theme="dark"] {
+    --bg: #121212;
+    --card: #121212;
+    --text: #f5f5f5;
+    --text-secondary: #d4d4d4;
+    --text-muted: #a3a3a3;
+    --text-dim: #737373;
+    --border: #262626;
+    --border-light: #1f1f1f;
+    --tag-bg: #1f1f1f;
+    --tag-text: #d4d4d4;
+    --highlight-bg: #1a1a1a;
+    --highlight-text: #f5f5f5;
+    --highlight-border: #404040;
+    --ring: #404040;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
+  html { scroll-behavior: smooth; scroll-padding-top: 100px; }
+
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
     background: var(--bg);
-    color: var(--text);
-    line-height: 1.7;
-    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.75;
+    font-size: 16px;
+    font-weight: 400;
     -webkit-font-smoothing: antialiased;
+    transition: background-color .3s, color .3s;
+    overflow-wrap: break-word;
   }
 
   .container {
     max-width: var(--max-w);
     margin: 0 auto;
-    padding: 28px 18px 40px;
+    padding: 56px 20px 64px;
   }
 
   /* ===== Header ===== */
   .header {
-    background: var(--card);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    padding: 36px 32px;
     text-align: center;
-    margin-bottom: var(--gap);
-    position: relative;
-    overflow: hidden;
-  }
-  .header::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, #3b7dd8, #6db3f2);
+    padding: 40px 24px 36px;
   }
   .avatar {
-    width: 80px; height: 80px;
+    width: 130px; height: 130px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #3b7dd8, #5a9fe8);
-    color: #fff;
-    font-size: 32px;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 16px;
-    letter-spacing: 1px;
-    box-shadow: 0 4px 14px rgba(59,125,216,.35);
+    object-fit: cover;
+    display: block;
+    margin: 0 auto 24px;
+    border: 4px solid var(--ring);
+    transition: border-color .3s;
+    user-select: none;
   }
   .header h1 {
-    font-size: 28px;
-    font-weight: 700;
+    font-size: 34px;
+    font-weight: 300;
     color: var(--text);
-    letter-spacing: 2px;
-    margin-bottom: 4px;
+    letter-spacing: -0.025em;
+    margin-bottom: 10px;
   }
   .header .subtitle {
-    font-size: 15px;
-    color: var(--text-secondary);
-    margin-bottom: 2px;
+    font-size: 17px;
+    color: var(--text-muted);
+    font-weight: 300;
+    line-height: 1.8;
   }
-  .header .subtitle span { color: var(--primary); font-weight: 600; }
+  .header .subtitle strong {
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  /* ===== Tab Navigation ===== */
+  .tab-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px 32px;
+    padding: 16px 0 36px;
+    border-bottom: 1px solid var(--border-light);
+    margin-bottom: 36px;
+  }
+  .tab-nav a {
+    position: relative;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--text-muted);
+    padding: 4px 0;
+    transition: color .2s;
+    letter-spacing: -0.01em;
+  }
+  .tab-nav a:hover,
+  .tab-nav a.active {
+    color: var(--text);
+  }
+  .tab-nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 0; height: 2px;
+    background: var(--text);
+    transition: width .25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .tab-nav a:hover::after,
+  .tab-nav a.active::after {
+    width: 100%;
+  }
 
   /* ===== Section Card ===== */
   .section {
-    background: var(--card);
+    border: 1px solid transparent;
     border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    padding: 28px 32px;
-    margin-bottom: var(--gap);
-    transition: box-shadow .25s;
-  }
-  .section:hover {
-    box-shadow: var(--shadow-hover);
+    padding: 40px 40px;
+    margin-bottom: 24px;
   }
   .section-title {
-    font-size: 18px;
-    font-weight: 700;
+    font-size: 20px;
+    font-weight: 400;
     color: var(--text);
-    margin-bottom: 18px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid var(--border);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    letter-spacing: 1px;
-  }
-  .section-title::before {
-    content: '';
-    display: inline-block;
-    width: 4px;
-    height: 20px;
-    background: var(--primary);
-    border-radius: 2px;
-    flex-shrink: 0;
+    margin-bottom: 28px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border-light);
+    letter-spacing: -0.01em;
   }
 
   /* ===== Info Grid ===== */
   .info-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px 16px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px 24px;
   }
   .info-item {
     display: flex;
     align-items: baseline;
     gap: 6px;
-    font-size: 14px;
+    font-size: 15px;
     color: var(--text-secondary);
   }
   .info-item .label {
@@ -149,213 +183,215 @@
     align-items: flex-start;
     flex-wrap: wrap;
     gap: 8px;
-    margin-bottom: 14px;
+    margin-bottom: 18px;
   }
   .edu-header .school {
-    font-size: 16px;
-    font-weight: 700;
+    font-size: 17px;
+    font-weight: 500;
     color: var(--text);
   }
   .edu-header .date {
-    font-size: 13px;
-    color: var(--primary);
-    font-weight: 600;
-    background: var(--primary-light);
-    padding: 2px 12px;
-    border-radius: 20px;
+    font-size: 14px;
+    color: var(--text-muted);
+    font-weight: 400;
     white-space: nowrap;
   }
   .edu-metrics {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px 24px;
-    margin-bottom: 12px;
+    gap: 12px 28px;
+    margin-bottom: 18px;
   }
   .metric {
-    font-size: 14px;
-    color: var(--text-secondary);
+    font-size: 15px;
+    color: var(--text-muted);
   }
   .metric strong {
-    color: var(--primary);
-    font-size: 16px;
+    color: var(--text);
+    font-size: 17px;
+    font-weight: 600;
   }
   .courses {
-    font-size: 13px;
+    font-size: 14.5px;
     color: var(--text-muted);
-    line-height: 1.8;
+    line-height: 1.9;
   }
-  .courses b { color: var(--text-secondary); font-weight: 600; }
+  .courses b { color: var(--text); font-weight: 500; }
   .course-highlight {
     display: inline-block;
-    background: #f6f9fc;
-    color: var(--primary);
     font-weight: 600;
-    padding: 1px 7px;
-    border-radius: 4px;
-    margin: 0 2px;
-    font-size: 12px;
+    color: var(--text);
+    font-size: 13px;
   }
   .lang-badges {
     display: flex;
     gap: 10px;
-    margin-top: 10px;
+    margin-top: 14px;
   }
   .lang-badge {
-    font-size: 12px;
-    background: var(--primary-light);
-    color: var(--primary);
-    padding: 3px 10px;
-    border-radius: 12px;
-    font-weight: 600;
+    font-size: 13px;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    padding: 5px 14px;
+    border-radius: 16px;
+    font-weight: 500;
+    transition: background .2s;
   }
 
   /* ===== Research ===== */
   .research-card {
-    background: #fafbfc;
-    border-left: 3px solid var(--primary);
+    background: var(--highlight-bg);
+    border-left: 2px solid var(--text-dim);
     border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-    padding: 18px 20px;
-    margin-bottom: 0;
+    padding: 24px 28px;
   }
   .research-card .paper-title {
-    font-size: 15px;
-    font-weight: 700;
+    font-size: 16px;
+    font-weight: 500;
     color: var(--text);
-    margin-bottom: 6px;
+    margin-bottom: 8px;
     line-height: 1.5;
   }
   .research-card .paper-meta {
-    font-size: 13px;
-    color: var(--primary);
-    font-weight: 600;
-    margin-bottom: 10px;
+    font-size: 14px;
+    color: var(--text-muted);
+    font-weight: 400;
+    margin-bottom: 14px;
   }
   .research-card .paper-desc {
-    font-size: 13.5px;
+    font-size: 15px;
     color: var(--text-secondary);
-    line-height: 1.8;
-    margin-bottom: 10px;
+    line-height: 1.85;
+    margin-bottom: 12px;
     text-align: justify;
   }
   .research-card .paper-work {
-    font-size: 13.5px;
+    font-size: 15px;
     color: var(--text);
-    line-height: 1.8;
+    line-height: 1.85;
     text-align: justify;
   }
   .research-card .paper-work::before {
     content: '▎本人工作：';
-    font-weight: 700;
+    font-weight: 600;
     color: var(--text);
   }
 
   /* ===== Internship ===== */
   .intern-card {
-    margin-bottom: 16px;
+    margin-bottom: 28px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--border-light);
   }
-  .intern-card:last-child { margin-bottom: 0; }
+  .intern-card:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
   .intern-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     flex-wrap: wrap;
     gap: 6px;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
   }
   .intern-header .company {
-    font-size: 16px;
-    font-weight: 700;
+    font-size: 17px;
+    font-weight: 500;
     color: var(--text);
   }
   .intern-header .role {
-    font-size: 13px;
-    color: var(--primary);
-    font-weight: 600;
+    font-size: 14px;
+    color: var(--text-muted);
+    font-weight: 400;
   }
   .intern-header .date {
-    font-size: 12px;
-    color: var(--text-muted);
+    font-size: 13px;
+    color: var(--text-dim);
     white-space: nowrap;
   }
   .intern-org {
     font-size: 13px;
-    color: var(--text-muted);
-    margin-bottom: 8px;
+    color: var(--text-dim);
+    margin-bottom: 12px;
   }
   .tech-tags {
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
-    margin-bottom: 10px;
+    margin-bottom: 14px;
   }
   .tech-tag {
-    font-size: 12px;
-    background: #f0f4f8;
-    color: #4a6a8a;
-    padding: 2px 10px;
+    font-size: 13px;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    padding: 4px 12px;
     border-radius: 4px;
-    font-family: "SF Mono", "Fira Code", "Consolas", monospace;
+    font-family: var(--font-mono);
     font-weight: 500;
+    letter-spacing: -0.01em;
+    transition: background .2s;
   }
   .intern-work {
-    font-size: 13.5px;
+    font-size: 15px;
     color: var(--text-secondary);
     line-height: 1.85;
-    padding-left: 14px;
-    border-left: 2px solid var(--border);
+    padding-left: 16px;
+    border-left: 1px solid var(--border);
   }
 
   /* ===== Honors ===== */
   .honor-group {
-    margin-bottom: 12px;
+    margin-bottom: 18px;
   }
   .honor-group:last-child { margin-bottom: 0; }
   .honor-group .group-label {
-    font-size: 13px;
-    font-weight: 700;
+    font-size: 14px;
+    font-weight: 500;
     color: var(--text);
-    margin-bottom: 6px;
+    margin-bottom: 10px;
   }
   .honor-list {
     list-style: none;
     display: flex;
     flex-wrap: wrap;
-    gap: 6px 8px;
+    gap: 8px;
   }
   .honor-list li {
-    font-size: 13px;
+    font-size: 14px;
     color: var(--text-secondary);
-    padding: 3px 10px;
-    background: #fafbfc;
-    border-radius: 4px;
-    border: 1px solid var(--border);
+    padding: 5px 14px;
+    background: var(--tag-bg);
+    border-radius: 6px;
   }
   .honor-list li.highlight {
-    background: var(--primary-light);
-    border-color: #c5d9f5;
-    color: #2c5aa0;
-    font-weight: 600;
+    background: var(--highlight-bg);
+    border: 1px solid var(--highlight-border);
+    color: var(--highlight-text);
+    font-weight: 500;
   }
 
   /* ===== Skills ===== */
   .skill-list {
     list-style: none;
+    max-width: 880px;
   }
   .skill-list li {
-    font-size: 14px;
+    font-size: 15px;
     color: var(--text-secondary);
-    padding: 7px 0;
-    border-bottom: 1px solid #f2f4f7;
+    padding: 5px 0;
+    border-bottom: 1px solid var(--border-light);
     display: flex;
     align-items: flex-start;
-    gap: 10px;
-    line-height: 1.7;
+    gap: 6px;
+    line-height: 1.6;
   }
   .skill-list li:last-child { border-bottom: none; }
   .skill-list li::before {
     content: '▹';
-    color: var(--primary);
-    font-weight: 700;
+    color: var(--text-dim);
+    font-weight: 400;
     flex-shrink: 0;
     margin-top: 1px;
   }
@@ -363,29 +399,119 @@
   /* ===== Footer ===== */
   .footer {
     text-align: center;
-    font-size: 12px;
+    font-size: 13px;
+    color: var(--text-dim);
+    padding: 24px 0 0;
+    line-height: 2.2;
+  }
+  .footer a {
     color: var(--text-muted);
-    padding: 12px 0 0;
+    text-decoration: none;
+    transition: color .2s;
+  }
+  .footer a:hover {
+    color: var(--text);
+  }
+
+  /* ===== Footer Controls Row ===== */
+  .footer-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+  }
+
+  /* ===== Theme Toggle ===== */
+  .theme-toggle {
+    display: inline-flex;
+    background: var(--tag-bg);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 3px;
+    gap: 2px;
+  }
+  .theme-btn {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    color: var(--text-muted);
+    transition: all .2s;
+    line-height: 1;
+  }
+  .theme-btn:hover { color: var(--text); }
+  .theme-btn.active {
+    background: var(--bg);
+    color: var(--text);
+    box-shadow: 0 1px 3px rgba(0,0,0,.08);
+  }
+  [data-theme="dark"] .theme-btn.active {
+    box-shadow: 0 1px 3px rgba(0,0,0,.4);
+  }
+
+  /* ===== Language Toggle ===== */
+  .lang-toggle {
+    display: inline-flex;
+    background: var(--tag-bg);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 3px;
+    gap: 2px;
+  }
+  .lang-btn {
+    height: 34px;
+    padding: 0 14px;
+    border-radius: 21px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-muted);
+    transition: all .2s;
+    font-family: inherit;
+    letter-spacing: 0.02em;
+  }
+  .lang-btn:hover { color: var(--text); }
+  .lang-btn.active {
+    background: var(--bg);
+    color: var(--text);
+    box-shadow: 0 1px 3px rgba(0,0,0,.08);
+  }
+  [data-theme="dark"] .lang-btn.active {
+    box-shadow: 0 1px 3px rgba(0,0,0,.4);
   }
 
   /* ===== Responsive ===== */
   @media (max-width: 768px) {
-    .container { padding: 16px 12px 28px; }
-    .header { padding: 28px 20px; }
-    .header h1 { font-size: 24px; }
-    .section { padding: 20px 18px; }
-    .info-grid { grid-template-columns: repeat(2, 1fr); }
+    .container { padding: 36px 16px 48px; }
+    .header { padding: 28px 12px 28px; }
+    .header h1 { font-size: 28px; }
+    .section { padding: 28px 22px; }
+    .info-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .edu-header { flex-direction: column; }
     .intern-header { flex-direction: column; }
-    .avatar { width: 64px; height: 64px; font-size: 26px; }
+    .avatar { width: 88px; height: 88px; }
+    .tab-nav { gap: 4px 20px; font-size: 15px; }
+    .tab-nav a { font-size: 15px; }
   }
   @media (max-width: 480px) {
-    .info-grid { grid-template-columns: 1fr 1fr; gap: 6px 10px; }
-    .info-item { font-size: 13px; }
-    .section-title { font-size: 16px; }
-    .header h1 { font-size: 22px; }
+    .info-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 14px; }
+    .info-item { font-size: 14px; }
+    .section-title { font-size: 18px; }
+    .header h1 { font-size: 26px; }
     .tech-tags { gap: 4px; }
-    .tech-tag { font-size: 11px; padding: 2px 7px; }
+    .tech-tag { font-size: 12px; padding: 3px 9px; }
+    .section { padding: 22px 16px; }
+    .tab-nav { gap: 2px 14px; }
+    .tab-nav a { font-size: 14px; }
   }
 </style>
 </head>
@@ -395,47 +521,57 @@
 
   <!-- ====== 头部 ====== -->
   <header class="header">
-    <div class="avatar">李嘉杰</div>
-    <h1>李 嘉 杰</h1>
-    <p class="subtitle"><span>长沙理工大学</span> · 计算机与通信工程学院 · 软件工程</p>
-    <p class="subtitle" style="font-size:13px;color:var(--text-muted);margin-top:2px;">2023级本科生 · 2027届应届生</p>
+    <img class="avatar" src="ljj.jpg" alt="李嘉杰">
+    <h1 data-i18n="name">李 嘉 杰</h1>
+    <p class="subtitle"><strong>长沙理工大学</strong> · 计算机与通信工程学院 · <span data-i18n="major">软件工程</span></p>
+    <p class="subtitle" style="font-size:15px;margin-top:4px;" data-i18n="grade">2023级本科生 · 2027届应届生</p>
   </header>
 
+  <!-- ====== Tab 导航 ====== -->
+  <nav class="tab-nav">
+    <a href="#info" data-i18n="tab_info">基本信息</a>
+    <a href="#education" data-i18n="tab_edu">教育经历</a>
+    <a href="#research" data-i18n="tab_research">科研论文</a>
+    <a href="#internship" data-i18n="tab_intern">实习经历</a>
+    <a href="#honors" data-i18n="tab_honors">荣誉奖项</a>
+    <a href="#skills" data-i18n="tab_skills">技能清单</a>
+  </nav>
+
   <!-- ====== 基本信息 ====== -->
-  <section class="section">
-    <h2 class="section-title">基本信息</h2>
+  <section class="section" id="info">
+    <h2 class="section-title" data-i18n="info_title">基本信息</h2>
     <div class="info-grid">
-      <div class="info-item"><span class="label">性别</span><span class="value">男</span></div>
-      <div class="info-item"><span class="label">年龄</span><span class="value">21 岁</span></div>
-      <div class="info-item"><span class="label">民族</span><span class="value">汉族</span></div>
-      <div class="info-item"><span class="label">政治面貌</span><span class="value">共产党员</span></div>
-      <div class="info-item"><span class="label">电话</span><span class="value">15200941479</span></div>
-      <div class="info-item"><span class="label">微信</span><span class="value">15200941479</span></div>
-      <div class="info-item"><span class="label">邮箱</span><span class="value">202308130108@csust.edu.cn</span></div>
-      <div class="info-item"><span class="label">籍贯</span><span class="value">湖南娄底</span></div>
-      <div class="info-item" style="grid-column: span 2;"><span class="label">现居地</span><span class="value">湖南长沙</span></div>
+      <div class="info-item"><span class="label" data-i18n="gender_label">性别</span><span class="value" data-i18n="gender">男</span></div>
+      <div class="info-item"><span class="label" data-i18n="age_label">年龄</span><span class="value" data-i18n="age">21 岁</span></div>
+      <div class="info-item"><span class="label" data-i18n="ethnicity_label">民族</span><span class="value" data-i18n="ethnicity">汉族</span></div>
+      <div class="info-item"><span class="label" data-i18n="political_label">政治面貌</span><span class="value" data-i18n="political">共产党员</span></div>
+      <div class="info-item"><span class="label" data-i18n="phone_label">电话</span><span class="value">15200941479</span></div>
+      <div class="info-item"><span class="label" data-i18n="wechat_label">微信</span><span class="value">15200941479</span></div>
+      <div class="info-item"><span class="label" data-i18n="email_label">邮箱</span><span class="value">202308130108@csust.edu.cn</span></div>
+      <div class="info-item"><span class="label" data-i18n="hometown_label">籍贯</span><span class="value" data-i18n="hometown">湖南娄底</span></div>
+      <div class="info-item" style="grid-column: span 2;"><span class="label" data-i18n="location_label">现居地</span><span class="value" data-i18n="location">湖南长沙</span></div>
     </div>
   </section>
 
   <!-- ====== 教育经历 ====== -->
-  <section class="section">
-    <h2 class="section-title">教育经历</h2>
+  <section class="section" id="education">
+    <h2 class="section-title" data-i18n="edu_title">教育经历</h2>
     <div class="edu-header">
-      <div class="school">长沙理工大学 · 计算机与通信工程学院 · 软件工程</div>
-      <div class="date">2023.09 – 2027.06</div>
+      <div class="school" data-i18n="edu_school">长沙理工大学 · 计算机与通信工程学院 · 软件工程</div>
+      <div class="date" data-i18n="edu_date">2023.09 – 2027.06</div>
     </div>
     <div class="edu-metrics">
-      <span class="metric">加权平均分 <strong>89.0</strong></span>
+      <span class="metric"><span data-i18n="edu_avg">加权平均分</span> <strong>89.0</strong></span>
       <span class="metric">GPA <strong>3.75</strong> / 4.0</span>
-      <span class="metric">专业排名 <strong>2</strong> / 163（<strong>前 1.2%</strong>）</span>
+      <span class="metric"><span data-i18n="edu_rank">专业排名</span> <strong>2</strong> / 163（<strong data-i18n="edu_rank_pct">前 1.2%</strong>）</span>
     </div>
     <div class="courses">
-      <b>主修课程：</b>
+      <b data-i18n="edu_courses_label">主修课程：</b>
       Python 程序设计 <span class="course-highlight">100</span>
-      &nbsp;线性代数 <span class="course-highlight">100</span>
-      &nbsp;大学物理 <span class="course-highlight">99</span>
-      &nbsp;离散结构 <span class="course-highlight">98</span>
-      &nbsp;移动开发技术 <span class="course-highlight">98</span>
+      &nbsp;<span data-i18n="course_linear">线性代数</span> <span class="course-highlight">100</span>
+      &nbsp;<span data-i18n="course_physics">大学物理</span> <span class="course-highlight">99</span>
+      &nbsp;<span data-i18n="course_discrete">离散结构</span> <span class="course-highlight">98</span>
+      &nbsp;<span data-i18n="course_mobile">移动开发技术</span> <span class="course-highlight">98</span>
     </div>
     <div class="lang-badges">
       <span class="lang-badge">CET-4 510</span>
@@ -444,36 +580,36 @@
   </section>
 
   <!-- ====== 科研论文经历 ====== -->
-  <section class="section">
-    <h2 class="section-title">科研论文经历</h2>
+  <section class="section" id="research">
+    <h2 class="section-title" data-i18n="research_title">科研论文经历</h2>
     <div class="research-card">
       <div class="paper-title">
         CrackDINO: A DINOv3-based Hybrid Framework for Fine-Grained Crack Segmentation
       </div>
-      <div class="paper-meta">2026.03 – 至今 · 第一作者 · ICIC 2026 在投</div>
-      <div class="paper-desc">
+      <div class="paper-meta" data-i18n="paper_meta">2026.03 – 至今 · 第一作者 · ICIC 2026 在投</div>
+      <div class="paper-desc" data-i18n="paper_desc">
         针对路面细裂缝样本稀缺、对比度低、细小裂纹易漏检断裂的问题，提出 CrackDINO 混合分割框架：以自监督预训练大模型 DINOv3 作为特征编码器提取全局语义；自研 RGMFP 补充浅层细节、CAS 增强弱裂缝特征、CHMD 渐进解码重构轮廓，三重模块联合优化 U-Net 分割头，融合 Transformer 全局语义与 CNN 局部细节。在公开裂缝数据集上较基线模型 mIoU 提升明显，整体性能优于多款主流分割算法。
       </div>
-      <div class="paper-work">
+      <div class="paper-work" data-i18n="paper_work">
         独立完成数据集标注预处理、模型 PyTorch 代码搭建；复现 DINOv2、SAM3、U-Net 等主流算法做横向对比，设计多组消融实验验证自研模块有效性，完成实验可视化、论文全文撰写及 ICIC 2026 投稿全流程。
       </div>
     </div>
   </section>
 
   <!-- ====== 实习经历 ====== -->
-  <section class="section">
-    <h2 class="section-title">实习经历</h2>
+  <section class="section" id="internship">
+    <h2 class="section-title" data-i18n="intern_title">实习经历</h2>
 
     <!-- 金蝶 -->
-    <div class="intern-card" style="margin-bottom:22px;">
+    <div class="intern-card">
       <div class="intern-header">
         <div>
-          <div class="company">金蝶软件（中国）有限公司</div>
-          <div class="role">管易研发部门 · 前端实习生</div>
+          <div class="company" data-i18n="intern1_company">金蝶软件（中国）有限公司</div>
+          <div class="role" data-i18n="intern1_role">管易研发部门 · 前端实习生</div>
         </div>
         <div class="date">2026.01 – 2026.03</div>
       </div>
-      <div class="intern-org">公司规模 1000–9999 人</div>
+      <div class="intern-org" data-i18n="intern1_org">公司规模 1000–9999 人</div>
       <div class="tech-tags">
         <span class="tech-tag">React</span>
         <span class="tech-tag">TypeScript</span>
@@ -482,8 +618,8 @@
         <span class="tech-tag">Webpack</span>
         <span class="tech-tag">Zustand</span>
       </div>
-      <div class="intern-work">
-        参与千牛平台易工单 ERP 插件开发，依托 JSON Schema 搭建低代码表单渲染能力，封装通用 Hook 与全局状态管理方案，落地快捷录入、数据联动等业务功能，通过组件与状态优化精简重复代码、提升工单处理效率。
+      <div class="intern-work" data-i18n="intern1_work">
+        参与千牛平台易工单 ERP 插件开发,依托 JSON Schema 搭建低代码表单渲染能力，封装通用 Hook 与全局状态管理方案，落地快捷录入、数据联动等业务功能，通过组件与状态优化精简重复代码、提升工单处理效率。
       </div>
     </div>
 
@@ -491,12 +627,12 @@
     <div class="intern-card">
       <div class="intern-header">
         <div>
-          <div class="company">湖南聚恒科技有限公司</div>
-          <div class="role">前端实习生</div>
+          <div class="company" data-i18n="intern2_company">湖南聚恒科技有限公司</div>
+          <div class="role" data-i18n="intern2_role">前端实习生</div>
         </div>
         <div class="date">2025.06 – 2025.09</div>
       </div>
-      <div class="intern-org">公司规模 1000–9999 人</div>
+      <div class="intern-org" data-i18n="intern2_org">公司规模 1000–9999 人</div>
       <div class="tech-tags">
         <span class="tech-tag">Vue</span>
         <span class="tech-tag">JavaScript</span>
@@ -506,54 +642,307 @@
         <span class="tech-tag">ECharts</span>
         <span class="tech-tag">Uview-plus</span>
       </div>
-      <div class="intern-work">
+      <div class="intern-work" data-i18n="intern2_work">
         参与广告主后台、辅警招考 UniApp 项目开发，基于 RBAC 搭建多角色权限管控体系，二次封装通用表单组件完成复杂广告配置业务；通过分包构建、代码压缩、虚拟列表等方案优化包体积与大数据列表渲染性能，运用设计模式封装 ECharts 可视化组件，实现多端业务高效落地。
       </div>
     </div>
   </section>
 
   <!-- ====== 荣誉奖项 ====== -->
-  <section class="section">
-    <h2 class="section-title">荣誉奖项</h2>
+  <section class="section" id="honors">
+    <h2 class="section-title" data-i18n="honors_title">荣誉奖项</h2>
 
     <div class="honor-group">
-      <div class="group-label">🏆 竞赛获奖</div>
+      <div class="group-label" data-i18n="honors_competition">竞赛获奖</div>
       <ul class="honor-list">
-        <li class="highlight">CCF 开源创新大赛 · 国家级一等奖</li>
-        <li>蓝桥杯 · 省级二等奖</li>
-        <li>服务外包创新大赛 · 省级三等奖</li>
+        <li class="highlight" data-i18n="honor_ccf">CCF 开源创新大赛 · 国家级一等奖</li>
+        <li data-i18n="honor_lanqiao">蓝桥杯 · 省级二等奖</li>
+        <li data-i18n="honor_service">服务外包创新大赛 · 省级三等奖</li>
       </ul>
     </div>
 
     <div class="honor-group">
-      <div class="group-label">🎖 奖学金及表彰</div>
+      <div class="group-label" data-i18n="honors_scholarship">奖学金及表彰</div>
       <ul class="honor-list">
-        <li>一等奖学金</li>
-        <li>三好学生</li>
-        <li>优秀班干部</li>
-        <li>优秀团员</li>
-        <li>科技创新先进个人</li>
+        <li data-i18n="honor_first_prize">一等奖学金</li>
+        <li data-i18n="honor_sanhao">三好学生</li>
+        <li data-i18n="honor_cadre">优秀班干部</li>
+        <li data-i18n="honor_member">优秀团员</li>
+        <li data-i18n="honor_innovation">科技创新先进个人</li>
       </ul>
     </div>
   </section>
 
   <!-- ====== 技能清单 ====== -->
-  <section class="section">
-    <h2 class="section-title">技能清单</h2>
+  <section class="section" id="skills">
+    <h2 class="section-title" data-i18n="skills_title">技能清单</h2>
     <ul class="skill-list">
-      <li>熟悉 <b>Python</b>、<b>TypeScript</b>、<b>C/C++</b>，掌握面向对象与常用设计模式</li>
-      <li>熟悉 <b>PyTorch</b> 与 <b>OpenCV</b>，精通深度学习模型构建、训练及计算机视觉任务</li>
-      <li>熟练运用 <b>Claude Skills</b>、<b>Prompt Engineering</b> 及 <b>MCP</b> 等 AI 工具，辅助代码生成、调试与开发提效</li>
-      <li>熟悉 <b>Git</b>、<b>Linux</b>、<b>Docker</b> 基础使用，<b>LaTeX</b> 论文排版，<b>Visio</b>、<b>PPT</b> 架构绘图，英文六级可顺畅阅读顶会论文</li>
+      <li data-i18n="skill_1">熟悉 <b>Python</b>、<b>TypeScript</b>、<b>C/C++</b>，掌握面向对象与常用设计模式</li>
+      <li data-i18n="skill_2">熟悉 <b>PyTorch</b> 与 <b>OpenCV</b>，精通深度学习模型构建、训练及计算机视觉任务</li>
+      <li data-i18n="skill_3">熟练运用 <b>Claude Skills</b>、<b>Prompt Engineering</b> 及 <b>MCP</b> 等 AI 工具，辅助代码生成、调试与开发提效</li>
+      <li data-i18n="skill_4">熟悉 <b>Git</b>、<b>Linux</b>、<b>Docker</b> 基础使用，<b>LaTeX</b> 论文排版，<b>Visio</b>、<b>PPT</b> 架构绘图，英文六级可顺畅阅读顶会论文</li>
     </ul>
   </section>
 
   <!-- ====== Footer ====== -->
   <footer class="footer">
-    李嘉杰 · 长沙理工大学软件工程 · 202308130108@csust.edu.cn
+    <p data-i18n="footer_text">李嘉杰 · 长沙理工大学软件工程 · 202308130108@csust.edu.cn</p>
+    <div class="footer-controls">
+      <div class="lang-toggle">
+        <button class="lang-btn active" data-lang="zh">中</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+      </div>
+      <div class="theme-toggle">
+        <button class="theme-btn active" data-theme-btn="light" title="浅色模式" aria-label="浅色模式">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+        </button>
+        <button class="theme-btn" data-theme-btn="system" title="跟随系统" aria-label="跟随系统">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>
+        </button>
+        <button class="theme-btn" data-theme-btn="dark" title="深色模式" aria-label="深色模式">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg>
+        </button>
+      </div>
+    </div>
   </footer>
 
 </div>
+
+<script>
+/* ==========================================
+   i18n — Chinese / English translations
+   ========================================== */
+const i18n = {
+  zh: {
+    // Header
+    name: "李 嘉 杰",
+    major: "软件工程",
+    grade: "2023级本科生 · 2027届应届生",
+    // Tab nav
+    tab_info: "基本信息",
+    tab_edu: "教育经历",
+    tab_research: "科研论文",
+    tab_intern: "实习经历",
+    tab_honors: "荣誉奖项",
+    tab_skills: "技能清单",
+    // Info
+    info_title: "基本信息",
+    gender_label: "性别", gender: "男",
+    age_label: "年龄", age: "21 岁",
+    ethnicity_label: "民族", ethnicity: "汉族",
+    political_label: "政治面貌", political: "共产党员",
+    phone_label: "电话",
+    wechat_label: "微信",
+    email_label: "邮箱",
+    hometown_label: "籍贯", hometown: "湖南娄底",
+    location_label: "现居地", location: "湖南长沙",
+    // Education
+    edu_title: "教育经历",
+    edu_school: "长沙理工大学 · 计算机与通信工程学院 · 软件工程",
+    edu_date: "2023.09 – 2027.06",
+    edu_avg: "加权平均分",
+    edu_rank: "专业排名",
+    edu_rank_pct: "前 1.2%",
+    edu_courses_label: "主修课程：",
+    course_linear: "线性代数",
+    course_physics: "大学物理",
+    course_discrete: "离散结构",
+    course_mobile: "移动开发技术",
+    // Research
+    research_title: "科研论文经历",
+    paper_meta: "2026.03 – 至今 · 第一作者 · ICIC 2026 在投",
+    paper_desc: "针对路面细裂缝样本稀缺、对比度低、细小裂纹易漏检断裂的问题，提出 CrackDINO 混合分割框架：以自监督预训练大模型 DINOv3 作为特征编码器提取全局语义；自研 RGMFP 补充浅层细节、CAS 增强弱裂缝特征、CHMD 渐进解码重构轮廓，三重模块联合优化 U-Net 分割头，融合 Transformer 全局语义与 CNN 局部细节。在公开裂缝数据集上较基线模型 mIoU 提升明显，整体性能优于多款主流分割算法。",
+    paper_work: "独立完成数据集标注预处理、模型 PyTorch 代码搭建；复现 DINOv2、SAM3、U-Net 等主流算法做横向对比，设计多组消融实验验证自研模块有效性，完成实验可视化、论文全文撰写及 ICIC 2026 投稿全流程。",
+    // Internship
+    intern_title: "实习经历",
+    intern1_company: "金蝶软件（中国）有限公司",
+    intern1_role: "管易研发部门 · 前端实习生",
+    intern1_org: "公司规模 1000–9999 人",
+    intern1_work: "参与千牛平台易工单 ERP 插件开发，依托 JSON Schema 搭建低代码表单渲染能力，封装通用 Hook 与全局状态管理方案，落地快捷录入、数据联动等业务功能，通过组件与状态优化精简重复代码、提升工单处理效率。",
+    intern2_company: "湖南聚恒科技有限公司",
+    intern2_role: "前端实习生",
+    intern2_org: "公司规模 1000–9999 人",
+    intern2_work: "参与广告主后台、辅警招考 UniApp 项目开发，基于 RBAC 搭建多角色权限管控体系，二次封装通用表单组件完成复杂广告配置业务；通过分包构建、代码压缩、虚拟列表等方案优化包体积与大数据列表渲染性能，运用设计模式封装 ECharts 可视化组件，实现多端业务高效落地。",
+    // Honors
+    honors_title: "荣誉奖项",
+    honors_competition: "竞赛获奖",
+    honor_ccf: "CCF 开源创新大赛 · 国家级一等奖",
+    honor_lanqiao: "蓝桥杯 · 省级二等奖",
+    honor_service: "服务外包创新大赛 · 省级三等奖",
+    honors_scholarship: "奖学金及表彰",
+    honor_first_prize: "一等奖学金",
+    honor_sanhao: "三好学生",
+    honor_cadre: "优秀班干部",
+    honor_member: "优秀团员",
+    honor_innovation: "科技创新先进个人",
+    // Skills
+    skills_title: "技能清单",
+    skill_1: "熟悉 <b>Python</b>、<b>TypeScript</b>、<b>C/C++</b>，掌握面向对象与常用设计模式",
+    skill_2: "熟悉 <b>PyTorch</b> 与 <b>OpenCV</b>，精通深度学习模型构建、训练及计算机视觉任务",
+    skill_3: "熟练运用 <b>Claude Skills</b>、<b>Prompt Engineering</b> 及 <b>MCP</b> 等 AI 工具，辅助代码生成、调试与开发提效",
+    skill_4: "熟悉 <b>Git</b>、<b>Linux</b>、<b>Docker</b> 基础使用，<b>LaTeX</b> 论文排版，<b>Visio</b>、<b>PPT</b> 架构绘图，英文六级可顺畅阅读顶会论文",
+    // Footer
+    footer_text: "李嘉杰 · 长沙理工大学软件工程 · 202308130108@csust.edu.cn",
+  },
+  en: {
+    // Header
+    name: "Jiajie Li",
+    major: "Software Engineering",
+    grade: "Class of 2027 · Undergraduate",
+    // Tab nav
+    tab_info: "About",
+    tab_edu: "Education",
+    tab_research: "Research",
+    tab_intern: "Experience",
+    tab_honors: "Honors",
+    tab_skills: "Skills",
+    // Info
+    info_title: "About",
+    gender_label: "Gender", gender: "Male",
+    age_label: "Age", age: "21",
+    ethnicity_label: "Ethnicity", ethnicity: "Han Chinese",
+    political_label: "Political Status", political: "CPC Member",
+    phone_label: "Phone",
+    wechat_label: "WeChat",
+    email_label: "Email",
+    hometown_label: "Hometown", hometown: "Loudi, Hunan",
+    location_label: "Location", location: "Changsha, Hunan",
+    // Education
+    edu_title: "Education",
+    edu_school: "Changsha University of Science & Technology · School of Computer and Communication Engineering · Software Engineering",
+    edu_date: "2023.09 – 2027.06",
+    edu_avg: "Weighted Average",
+    edu_rank: "Rank",
+    edu_rank_pct: "Top 1.2%",
+    edu_courses_label: "Key Courses: ",
+    course_linear: "Linear Algebra",
+    course_physics: "College Physics",
+    course_discrete: "Discrete Structures",
+    course_mobile: "Mobile Development",
+    // Research
+    research_title: "Research",
+    paper_meta: "2026.03 – Present · First Author · Under Review at ICIC 2026",
+    paper_desc: "Addressing challenges of scarce fine crack samples, low contrast, and missed detections in pavement crack segmentation, we propose CrackDINO — a hybrid segmentation framework. It leverages self-supervised pretrained DINOv3 as a feature encoder for global semantics, complemented by three self-developed modules: RGMFP for shallow detail supplementation, CAS for weak crack feature enhancement, and CHMD for progressive contour reconstruction. These modules jointly optimize a U-Net segmentation head, fusing Transformer global semantics with CNN local details. CrackDINO achieves significant mIoU improvements over baselines on public crack datasets, outperforming several mainstream segmentation algorithms.",
+    paper_work: "Independently completed dataset annotation preprocessing and PyTorch model implementation; reproduced DINOv2, SAM3, U-Net, and other mainstream algorithms for horizontal comparison; designed multiple ablation studies to validate the effectiveness of self-developed modules; completed experimental visualization, full paper writing, and ICIC 2026 submission end-to-end.",
+    // Internship
+    intern_title: "Experience",
+    intern1_company: "Kingdee Software (China) Co., Ltd.",
+    intern1_role: "E-Commerce R&D · Frontend Intern",
+    intern1_org: "Company Size: 1000–9999",
+    intern1_work: "Contributed to the Qianniu platform ERP plugin for work order management. Built low-code form rendering based on JSON Schema, developed reusable Hooks and global state management solutions, implemented quick-entry and data-linking features, and improved work order processing efficiency through component and state optimization.",
+    intern2_company: "Hunan Juheng Technology Co., Ltd.",
+    intern2_role: "Frontend Intern",
+    intern2_org: "Company Size: 1000–9999",
+    intern2_work: "Participated in advertiser dashboard and police recruitment UniApp projects. Built RBAC-based multi-role permission management, developed reusable form components for complex ad configuration workflows. Optimized bundle size and large-list rendering performance through subpackage builds, code compression, and virtual scrolling. Designed reusable ECharts visualization components using design patterns for cross-platform deployment.",
+    // Honors
+    honors_title: "Honors & Awards",
+    honors_competition: "Competitions",
+    honor_ccf: "CCF Open-Source Innovation Contest · National First Prize",
+    honor_lanqiao: "Lanqiao Cup · Provincial Second Prize",
+    honor_service: "Service Outsourcing Innovation Contest · Provincial Third Prize",
+    honors_scholarship: "Scholarships & Recognitions",
+    honor_first_prize: "First-Class Scholarship",
+    honor_sanhao: "Merit Student",
+    honor_cadre: "Outstanding Class Officer",
+    honor_member: "Outstanding League Member",
+    honor_innovation: "Sci-Tech Innovation Pioneer",
+    // Skills
+    skills_title: "Skills",
+    skill_1: "Proficient in <b>Python</b>, <b>TypeScript</b>, <b>C/C++</b> with solid OOP and design pattern knowledge",
+    skill_2: "Experienced with <b>PyTorch</b> and <b>OpenCV</b> — skilled in deep learning model building, training, and computer vision tasks",
+    skill_3: "Proficient in <b>Claude Skills</b>, <b>Prompt Engineering</b>, and <b>MCP</b> for AI-assisted development, debugging, and productivity",
+    skill_4: "Familiar with <b>Git</b>, <b>Linux</b>, <b>Docker</b> basics, <b>LaTeX</b> typesetting, <b>Visio</b>/<b>PPT</b> architecture diagrams. CET-6 certified — comfortable reading top-tier conference papers",
+    // Footer
+    footer_text: "Jiajie Li · Software Engineering @ CSUST · 202308130108@csust.edu.cn",
+  }
+};
+
+(function() {
+  const html = document.documentElement;
+  const storedLang = localStorage.getItem('lang') || 'zh';
+
+  // --- Language Switcher ---
+  function setLang(lang) {
+    localStorage.setItem('lang', lang);
+    document.querySelectorAll('[data-lang]').forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+    });
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (i18n[lang] && i18n[lang][key]) {
+        el.innerHTML = i18n[lang][key];
+      }
+    });
+  }
+
+  document.querySelectorAll('[data-lang]').forEach(btn => {
+    btn.addEventListener('click', () => setLang(btn.getAttribute('data-lang')));
+  });
+  setLang(storedLang);
+
+  // --- Theme Switcher ---
+  const themeBtns = document.querySelectorAll('[data-theme-btn]');
+
+  function getTheme() {
+    const stored = localStorage.getItem('theme');
+    if (stored === 'dark' || stored === 'light') return stored;
+    return 'system';
+  }
+
+  function applyTheme(theme) {
+    if (theme === 'system') {
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      html.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+    } else {
+      html.setAttribute('data-theme', theme);
+    }
+  }
+
+  function updateThemeBtns(theme) {
+    themeBtns.forEach(b => {
+      b.classList.toggle('active', b.getAttribute('data-theme-btn') === theme);
+    });
+  }
+
+  function setTheme(theme) {
+    if (theme === 'system') {
+      localStorage.removeItem('theme');
+    } else {
+      localStorage.setItem('theme', theme);
+    }
+    applyTheme(getTheme());
+    updateThemeBtns(getTheme());
+  }
+
+  applyTheme(getTheme());
+  updateThemeBtns(getTheme());
+
+  themeBtns.forEach(btn => {
+    btn.addEventListener('click', () => setTheme(btn.getAttribute('data-theme-btn')));
+  });
+
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+    if (getTheme() === 'system') applyTheme('system');
+  });
+
+  // --- Tab Nav Active State ---
+  const sections = document.querySelectorAll('.section[id]');
+  const tabLinks = document.querySelectorAll('.tab-nav a');
+
+  function updateActiveTab() {
+    let currentId = '';
+    sections.forEach(sec => {
+      const top = sec.getBoundingClientRect().top;
+      if (top < 160) currentId = sec.id;
+    });
+    tabLinks.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + currentId);
+    });
+  }
+
+  window.addEventListener('scroll', updateActiveTab, { passive: true });
+})();
+</script>
 
 </body>
 </html>
